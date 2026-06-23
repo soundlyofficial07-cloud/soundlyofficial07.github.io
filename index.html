@@ -27,43 +27,38 @@
     }
 
     /* ── NAV ── */
-    nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(232, 237, 245, 0.85);
+    header {
+      background: rgba(255,255,255,0.92);
       backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(59,91,219,0.08);
-      padding: 0 40px;
-      height: 60px;
+      border-bottom: 1px solid #e2e8f0;
+      padding: 0 2.5rem;
+      height: 64px;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
-    .nav-logo {
-      font-size: 1.2rem;
-      font-weight: 800;
-      color: var(--dark);
-      letter-spacing: -0.03em;
+    .logo {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 1.2rem; font-weight: 800;
+      color: var(--blue); text-decoration: none; letter-spacing: -0.02em;
     }
-    .nav-logo span { color: var(--blue); }
-    .nav-links { display: flex; gap: 32px; align-items: center; }
+    .logo-icon {
+      width: 36px; height: 36px; background: var(--blue);
+      border-radius: 9px; display: flex; align-items: center;
+      justify-content: center; font-size: 18px;
+    }
+    .logo-word { color: var(--dark); }
+    .nav-links { display: flex; align-items: center; gap: 0.25rem; }
     .nav-links a {
-      text-decoration: none;
-      font-size: 0.9rem;
-      font-weight: 500;
-      color: var(--gray);
-      transition: color 0.15s;
+      color: var(--gray); text-decoration: none;
+      padding: 0.4rem 0.9rem; border-radius: 6px;
+      font-size: 15px; font-weight: 500; transition: all 0.15s;
     }
-    .nav-links a:hover { color: var(--dark); }
-    .nav-cta {
-      background: var(--blue);
-      color: #fff !important;
-      padding: 8px 20px;
-      border-radius: 8px;
-      font-weight: 600 !important;
-    }
-    .nav-cta:hover { background: #2f4bbd; color: #fff !important; }
+    .nav-links a:hover { color: var(--dark); background: #eef4fb; }
+    .nav-links a.active { color: var(--blue); background: #eff6ff; }
 
     /* ── HERO ── */
     .hero {
@@ -251,13 +246,18 @@
 </head>
 <body>
 
-  <nav aria-label="Main navigation">
-    <div class="nav-logo">Sound<span>ly</span></div>
-    <div class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="lessons.html">Lessons</a>
-    </div>
-  </nav>
+  <header>
+    <a href="index.html" class="logo" aria-label="Soundly — Home">
+      <div class="logo-icon" aria-hidden="true">🎹</div>
+      <span class="logo-word">Soundly</span>
+    </a>
+    <nav class="nav-links" aria-label="Main navigation">
+      <a href="index.html" class="active">Home</a>
+      <a href="lessons2.html">Lessons</a>
+      <a href="donate.html">Donate</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
 
   <main>
     <!-- HERO -->
@@ -277,7 +277,7 @@
       </p>
 
       <div class="hero-actions">
-        <a href="lessons.html" class="btn-primary">Start Learning Free</a>
+        <a href="lessons2.html" class="btn-primary">Start Learning Free</a>
       </div>
 
       <!-- decorative keyboard -->
@@ -353,7 +353,7 @@
   </main>
 
   <footer>
-    <p>© 2026 Soundly · Music education for every child &nbsp;·&nbsp; <a href="lessons.html">Start Learning</a></p>
+    <p>© 2026 Soundly · Music education for every child &nbsp;·&nbsp; <a href="lessons2.html">Start Learning</a></p>
   </footer>
 
 </body>
