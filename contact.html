@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — Soundly</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #f8fafc;
+    --surface: #ffffff;
+    --surface2: #eef4fb;
+    --accent: #2563eb;
+    --accent-light: #eff6ff;
+    --accent-mid: #93c5fd;
+    --text: #0f172a;
+    --text-muted: #64748b;
+    --text-soft: #94a3b8;
+    --border: #e2e8f0;
+    --green: #16a34a;
+    --green-light: #f0fdf4;
+  }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg); color: var(--text);
+    min-height: 100vh; font-size: 17px; line-height: 1.6;
+  }
+
+  .skip-link {
+    position: absolute; top: -100px; left: 1rem;
+    background: var(--accent); color: #fff;
+    padding: 10px 18px; border-radius: 6px; font-weight: 700;
+    z-index: 9999; transition: top 0.2s; text-decoration: none;
+  }
+  .skip-link:focus { top: 1rem; }
+
+  header {
+    background: rgba(255,255,255,0.92); backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2.5rem; height: 64px;
+    display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; z-index: 100;
+  }
+  .logo {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 1.2rem; font-weight: 800;
+    color: var(--accent); text-decoration: none; letter-spacing: -0.02em;
+  }
+  .logo-icon {
+    width: 36px; height: 36px; background: var(--accent);
+    border-radius: 9px; display: flex; align-items: center;
+    justify-content: center; font-size: 18px;
+  }
+  .logo-word { color: var(--text); }
+  nav { display: flex; align-items: center; gap: 0.25rem; }
+  .nav-link {
+    color: var(--text-muted); text-decoration: none;
+    padding: 0.4rem 0.9rem; border-radius: 6px;
+    font-size: 15px; font-weight: 500; transition: all 0.15s;
+  }
+  .nav-link:hover { color: var(--text); background: var(--surface2); }
+  .nav-link[aria-current="page"] { color: var(--accent); background: var(--accent-light); }
+  .nav-link:focus { outline: 3px solid var(--accent-mid); outline-offset: 2px; }
+  .nav-cta {
+    background: var(--accent); color: #fff;
+    padding: 0.45rem 1.2rem; border-radius: 8px;
+    font-weight: 700; text-decoration: none; font-size: 15px;
+    transition: background 0.15s; margin-left: 0.5rem;
+  }
+  .nav-cta:hover { background: #1d4ed8; }
+  .nav-cta:focus { outline: 3px solid var(--accent-mid); outline-offset: 3px; }
+
+  /* PAGE HERO */
+  .page-hero {
+    padding: 4.5rem 2rem 3.5rem; text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .page-hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 80% at 50% 0%, rgba(147,197,253,0.2) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .page-hero-inner { position: relative; max-width: 600px; margin: 0 auto; }
+  .eyebrow {
+    font-size: 12px; text-transform: uppercase; letter-spacing: 0.12em;
+    color: var(--accent); font-weight: 700; margin-bottom: 0.75rem;
+  }
+  .page-title {
+    font-size: clamp(2rem, 5vw, 3rem); font-weight: 800;
+    line-height: 1.1; margin-bottom: 0.9rem; letter-spacing: -0.03em;
+  }
+  .page-sub { font-size: 1.05rem; color: var(--text-muted); line-height: 1.7; }
+
+  /* LAYOUT */
+  .contact-layout {
+    max-width: 960px; margin: 0 auto;
+    padding: 3rem 2rem 5rem;
+    display: grid;
+    grid-template-columns: 1fr 420px;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  /* FORM */
+  .form-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px; padding: 2.25rem;
+    box-shadow: 0 4px 24px rgba(37,99,235,0.07);
+  }
+  .form-card h2 { font-size: 1.15rem; font-weight: 800; margin-bottom: 1.75rem; color: var(--text); }
+
+  .field { margin-bottom: 1.2rem; }
+  .field label {
+    display: block; font-size: 13px; font-weight: 600;
+    color: var(--text-muted); margin-bottom: 0.4rem;
+  }
+  .field input, .field select, .field textarea {
+    width: 100%; padding: 0.72rem 1rem;
+    border: 1.5px solid var(--border); border-radius: 10px;
+    font-size: 15px; font-family: inherit; color: var(--text);
+    background: var(--bg); outline: none;
+    transition: border-color 0.15s;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus {
+    border-color: var(--accent); background: #fff;
+  }
+  .field textarea { resize: vertical; min-height: 130px; line-height: 1.6; }
+  .field input::placeholder, .field textarea::placeholder { color: var(--text-soft); }
+
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+  .submit-btn {
+    width: 100%; padding: 0.9rem;
+    background: var(--accent); color: #fff;
+    border: none; border-radius: 10px;
+    font-size: 1rem; font-weight: 700; cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+    box-shadow: 0 2px 12px rgba(37,99,235,0.22);
+    margin-top: 0.5rem;
+  }
+  .submit-btn:hover { background: #1d4ed8; transform: translateY(-1px); }
+  .submit-btn:focus { outline: 3px solid var(--accent-mid); outline-offset: 3px; }
+
+  .success-msg {
+    display: none; text-align: center; padding: 2rem;
+  }
+  .success-msg .check { font-size: 3rem; margin-bottom: 0.75rem; }
+  .success-msg h3 { font-size: 1.15rem; font-weight: 800; margin-bottom: 0.5rem; }
+  .success-msg p { font-size: 15px; color: var(--text-muted); }
+
+  /* INFO PANEL */
+  .info-panel { display: flex; flex-direction: column; gap: 1.25rem; }
+  .info-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px; padding: 1.5rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .info-card:hover { border-color: var(--accent-mid); box-shadow: 0 4px 16px rgba(37,99,235,0.07); }
+  .info-icon { font-size: 1.5rem; margin-bottom: 0.6rem; display: block; }
+  .info-card h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.3rem; }
+  .info-card p { font-size: 14px; color: var(--text-muted); line-height: 1.65; }
+  .info-card a { color: var(--accent); text-decoration: none; font-weight: 600; }
+  .info-card a:hover { text-decoration: underline; }
+
+  /* FOOTER */
+  footer {
+    background: var(--surface); border-top: 1px solid var(--border);
+    padding: 2rem; text-align: center;
+    font-size: 14px; color: var(--text-muted);
+    display: flex; flex-direction: column; align-items: center; gap: 0.75rem;
+  }
+  .footer-logo { font-weight: 800; color: var(--accent); font-size: 15px; }
+  .footer-links { display: flex; gap: 1.5rem; flex-wrap: wrap; justify-content: center; }
+  .footer-links a { color: var(--text-muted); text-decoration: none; }
+  .footer-links a:hover { color: var(--accent); }
+
+  @media (max-width: 720px) {
+    .contact-layout { grid-template-columns: 1fr; gap: 2rem; }
+    .field-row { grid-template-columns: 1fr; }
+    header { padding: 0 1rem; }
+    header nav .nav-link { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<header>
+  <a href="index2.html" class="logo" aria-label="Soundly — Home">
+    <div class="logo-icon" aria-hidden="true">🎹</div>
+    <span class="logo-word">Soundly</span>
+  </a>
+  <nav aria-label="Main navigation">
+    <a href="index2.html" class="nav-link">Home</a>
+    <a href="lessons2.html" class="nav-link">Lessons</a>
+    <a href="donate.html" class="nav-link">Donate</a>
+    <a href="contact.html" class="nav-link" aria-current="page">Contact</a>
+  </nav>
+</header>
+
+<main id="main-content" tabindex="-1">
+
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <p class="eyebrow">Get in touch</p>
+      <h1 class="page-title">We'd love to hear from you</h1>
+      <p class="page-sub">Whether you want to partner, donate an instrument, or just say hello — reach out and we'll get back to you.</p>
+    </div>
+  </div>
+
+  <div class="contact-layout">
+
+    <!-- FORM -->
+    <div class="form-card">
+      <h2>Send us a message</h2>
+      <div id="contact-form">
+        <div class="field-row">
+          <div class="field">
+            <label for="fname">First name</label>
+            <input type="text" id="fname" placeholder="Jane" autocomplete="given-name">
+          </div>
+          <div class="field">
+            <label for="lname">Last name</label>
+            <input type="text" id="lname" placeholder="Smith" autocomplete="family-name">
+          </div>
+        </div>
+        <div class="field">
+          <label for="email">Email address</label>
+          <input type="email" id="email" placeholder="you@example.com" autocomplete="email">
+        </div>
+        <div class="field">
+          <label for="subject">What is this about?</label>
+          <select id="subject">
+            <option value="" disabled selected>Choose a topic…</option>
+            <option value="partner">Partnering a school</option>
+            <option value="instrument">Donating an instrument</option>
+            <option value="lessons">Questions about lessons</option>
+            <option value="donate">Donation / GoFundMe</option>
+            <option value="press">Press or media</option>
+            <option value="other">Something else</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="message">Message</label>
+          <textarea id="message" placeholder="Tell us what's on your mind…"></textarea>
+        </div>
+        <button class="submit-btn" onclick="submitForm()">Send Message →</button>
+      </div>
+
+      <div class="success-msg" id="success-msg" role="alert" aria-live="polite">
+        <div class="check">✅</div>
+        <h3>Message sent!</h3>
+        <p>Thanks for reaching out. We'll get back to you as soon as possible.</p>
+      </div>
+    </div>
+
+    <!-- INFO PANEL -->
+    <div class="info-panel">
+      <div class="info-card">
+        <span class="info-icon" aria-hidden="true">💚</span>
+        <h3>Donate on GoFundMe</h3>
+        <p>All financial donations are handled securely through GoFundMe. <a href="https://gofund.me/007283908" target="_blank" rel="noopener">Give on GoFundMe ↗</a></p>
+      </div>
+      <div class="info-card">
+        <span class="info-icon" aria-hidden="true">🏫</span>
+        <h3>Partner a school</h3>
+        <p>Know a school that could benefit from Soundly's lessons or a donated instrument? Use the form and select "Partnering a school."</p>
+      </div>
+      <div class="info-card">
+        <span class="info-icon" aria-hidden="true">🎹</span>
+        <h3>Donate an instrument</h3>
+        <p>Have a piano or keyboard gathering dust? We can arrange pickup and donation to a school. Select "Donating an instrument" in the form.</p>
+      </div>
+      <div class="info-card">
+        <span class="info-icon" aria-hidden="true">⏱️</span>
+        <h3>Response time</h3>
+        <p>We typically respond within 2–3 business days. Thank you for your patience — we're a small, student-run team.</p>
+      </div>
+    </div>
+
+  </div>
+
+</main>
+
+<footer>
+  <div class="footer-logo">🎹 Soundly</div>
+  <nav class="footer-links" aria-label="Footer navigation">
+    <a href="index2.html">Home</a>
+    <a href="lessons2.html">Lessons</a>
+    <a href="donate.html">Donate</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+  <div>Built with accessibility at heart · Free for all learners</div>
+</footer>
+
+<script>
+  function submitForm() {
+    const fname = document.getElementById('fname').value.trim();
+    const lname = document.getElementById('lname').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const subject = document.getElementById('subject');
+    const subjectText = subject.options[subject.selectedIndex]?.text || 'General enquiry';
+    const message = document.getElementById('message').value.trim();
+
+    if (!fname || !email || !message) {
+      alert('Please fill in your name, email, and message before sending.');
+      return;
+    }
+    if (!email.includes('@')) {
+      alert('Please enter a valid email address.');
+      return;
+    }
+
+    const to = 'soundlyofficial07@gmail.com';
+    const mailSubject = encodeURIComponent('Soundly Contact: ' + subjectText);
+    const body = encodeURIComponent(
+      'Name: ' + fname + ' ' + lname + '\n' +
+      'Email: ' + email + '\n' +
+      'Topic: ' + subjectText + '\n\n' +
+      'Message:\n' + message
+    );
+
+    window.location.href = 'mailto:' + to + '?subject=' + mailSubject + '&body=' + body;
+
+    // Show success after a short delay to let mailto open
+    setTimeout(() => {
+      document.getElementById('contact-form').style.display = 'none';
+      document.getElementById('success-msg').style.display = 'block';
+    }, 500);
+  }
+</script>
+
+</body>
+</html>

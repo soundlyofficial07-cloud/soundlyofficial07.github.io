@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Soundly — Music for Every Child</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue: #3b5bdb;
+      --blue-light: #e8edff;
+      --dark: #0f1117;
+      --gray: #6b7280;
+      --bg-hero: #e8edf5;
+      --bg-stats: #edf0f7;
+      --white: #ffffff;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--dark);
+      background: var(--white);
+    }
+
+    /* ── NAV ── */
+    header {
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid #e2e8f0;
+      padding: 0 2.5rem;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .logo {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 1.2rem; font-weight: 800;
+      color: var(--blue); text-decoration: none; letter-spacing: -0.02em;
+    }
+    .logo-icon {
+      width: 36px; height: 36px; background: var(--blue);
+      border-radius: 9px; display: flex; align-items: center;
+      justify-content: center; font-size: 18px;
+    }
+    .logo-word { color: var(--dark); }
+    .nav-links { display: flex; align-items: center; gap: 0.25rem; }
+    .nav-links a {
+      color: var(--gray); text-decoration: none;
+      padding: 0.4rem 0.9rem; border-radius: 6px;
+      font-size: 15px; font-weight: 500; transition: all 0.15s;
+    }
+    .nav-links a:hover { color: var(--dark); background: #eef4fb; }
+    .nav-links a.active { color: var(--blue); background: #eff6ff; }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(160deg, #dce4f0 0%, #e8edf5 40%, #eef2f9 100%);
+      min-height: calc(100vh - 60px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 80px 24px 100px;
+      gap: 0;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1.5px solid rgba(59,91,219,0.3);
+      border-radius: 999px;
+      padding: 10px 24px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--blue);
+      background: rgba(255,255,255,0.55);
+      margin-bottom: 44px;
+      letter-spacing: -0.01em;
+    }
+
+    .hero-headline {
+      font-size: clamp(3rem, 7vw, 5.8rem);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+      color: var(--dark);
+      max-width: 900px;
+      margin-bottom: 32px;
+    }
+    .hero-headline .accent { color: var(--blue); }
+
+    .hero-sub {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: var(--gray);
+      max-width: 600px;
+      line-height: 1.65;
+      margin-bottom: 48px;
+    }
+
+    .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+    .btn-primary {
+      background: var(--blue);
+      color: #fff;
+      padding: 14px 32px;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: background 0.15s, transform 0.1s;
+    }
+    .btn-primary:hover { background: #2f4bbd; transform: translateY(-1px); }
+    .btn-secondary {
+      background: rgba(255,255,255,0.7);
+      color: var(--dark);
+      padding: 14px 32px;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      border: 1.5px solid rgba(0,0,0,0.1);
+      transition: background 0.15s;
+    }
+    .btn-secondary:hover { background: #fff; }
+
+    /* keyboard illustration */
+    .keyboard-wrap {
+      margin-top: 64px;
+      display: flex;
+      gap: 4px;
+      justify-content: center;
+      align-items: flex-end;
+      user-select: none;
+    }
+    .key-white {
+      width: 36px; height: 90px;
+      background: rgba(255,255,255,0.7);
+      border: 1.5px solid rgba(59,91,219,0.15);
+      border-radius: 0 0 6px 6px;
+    }
+    .key-black {
+      width: 24px; height: 58px;
+      background: rgba(59,91,219,0.18);
+      border-radius: 0 0 4px 4px;
+      margin: 0 -12px;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* ── STATS BAR ── */
+    .stats-bar {
+      background: var(--bg-stats);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-top: 1px solid rgba(59,91,219,0.08);
+      border-bottom: 1px solid rgba(59,91,219,0.08);
+    }
+    .stat-item {
+      padding: 40px 24px;
+      text-align: center;
+      border-right: 1px solid rgba(59,91,219,0.1);
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-number {
+      display: block;
+      font-size: 2.8rem;
+      font-weight: 800;
+      color: var(--blue);
+      letter-spacing: -0.04em;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .stat-label {
+      font-size: 0.85rem;
+      color: var(--gray);
+      font-weight: 500;
+      letter-spacing: 0.02em;
+    }
+
+    /* ── MISSION ── */
+    .mission {
+      padding: 100px 24px;
+      text-align: center;
+    }
+    .section-eyebrow {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--blue);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .mission h2 {
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      margin-bottom: 48px;
+    }
+
+    .mission-card {
+      max-width: 740px;
+      margin: 0 auto;
+      background: var(--bg-stats);
+      border-radius: 16px;
+      border-left: 4px solid var(--blue);
+      padding: 44px 48px;
+      text-align: left;
+    }
+    .mission-card p {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--dark);
+      margin-bottom: 20px;
+    }
+    .mission-card p:last-child { margin-bottom: 0; color: var(--blue); font-weight: 600; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--bg-stats);
+      border-top: 1px solid rgba(59,91,219,0.08);
+      padding: 40px 24px;
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--gray);
+    }
+    footer a { color: var(--blue); text-decoration: none; }
+
+    @media (max-width: 600px) {
+      nav { padding: 0 20px; }
+      .nav-links { gap: 16px; }
+      .mission-card { padding: 28px 24px; }
+      .stats-bar { grid-template-columns: 1fr; }
+      .stat-item { border-right: none; border-bottom: 1px solid rgba(59,91,219,0.1); }
+      .stat-item:last-child { border-bottom: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a href="index2.html" class="logo" aria-label="Soundly — Home">
+      <div class="logo-icon" aria-hidden="true">🎹</div>
+      <span class="logo-word">Soundly</span>
+    </a>
+    <nav class="nav-links" aria-label="Main navigation">
+      <a href="index2.html" class="active">Home</a>
+      <a href="lessons2.html">Lessons</a>
+      <a href="donate.html">Donate</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero" aria-label="Hero">
+      <div class="hero-badge" aria-label="Free for every learner">
+        ♪ Free for every learner
+      </div>
+
+      <h1 class="hero-headline">
+        Music is for<br>
+        <span class="accent">every</span> child to play
+      </h1>
+
+      <p class="hero-sub">
+        Soundly teaches blind and visually impaired kids to play piano
+        by touch, sound, and feel — no barriers, just music.
+      </p>
+
+      <div class="hero-actions">
+        <a href="lessons2.html" class="btn-primary">Start Learning Free</a>
+      </div>
+
+      <!-- decorative keyboard -->
+      <div class="keyboard-wrap" aria-hidden="true">
+        <div class="key-white"></div>
+        <div class="key-black"></div>
+        <div class="key-white"></div>
+        <div class="key-black"></div>
+        <div class="key-white"></div>
+        <div class="key-white"></div>
+        <div class="key-black"></div>
+        <div class="key-white"></div>
+        <div class="key-black"></div>
+        <div class="key-white"></div>
+        <div class="key-black"></div>
+        <div class="key-white"></div>
+        <div class="key-white"></div>
+        <div class="key-black"></div>
+        <div class="key-white"></div>
+        <div class="key-black"></div>
+        <div class="key-white"></div>
+        <div class="key-white"></div>
+      </div>
+    </section>
+
+    <!-- STATS -->
+    <div class="stats-bar" role="region" aria-label="Course statistics">
+      <div class="stat-item">
+        <span class="stat-number">1</span>
+        <span class="stat-label">Course Unit</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">5</span>
+        <span class="stat-label">Video Lessons</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">100%</span>
+        <span class="stat-label">Free Forever</span>
+      </div>
+    </div>
+
+    <!-- MISSION -->
+    <section class="mission" id="mission" aria-labelledby="mission-heading">
+      <p class="section-eyebrow">Our Mission</p>
+      <h2 id="mission-heading">Music for every child, everywhere</h2>
+
+      <div class="mission-card">
+        <p>
+          Soundly is an organization dedicated to helping children around the world discover and
+          learn music — especially those who may not otherwise have access, including visually
+          impaired students. We believe that every child deserves the opportunity to experience
+          music from a young age, no matter their circumstances.
+        </p>
+        <p>
+          Soundly was founded by a student who has been learning piano for the past 9 years and is
+          passionate about sharing that knowledge with others.
+        </p>
+        <p>
+          We partner with schools across the globe to bring music education to their students.
+          However, many of these schools lack even the most basic resources — some don't have
+          access to a single piano.
+        </p>
+        <p>
+          That's why we're launching this GoFundMe: to raise money to purchase and donate pianos
+          and other equipment to schools in need, opening the door for countless children to begin
+          their musical journey.
+        </p>
+        <p>
+          With your support, we can make music accessible to every child — one piano at a time.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2026 Soundly · Music education for every child &nbsp;·&nbsp; <a href="lessons2.html">Start Learning</a></p>
+  </footer>
+
+</body>
+</html>
